@@ -65,7 +65,6 @@ for year in YEARS:
     studentsThisYear = []
     for i in range(averageStudentCountPerYear - deltaStudentCount):
         #gender = "Male"
-        #gender = random.choice(GENDER_RATIO.keys(), weights = GENDER_RATIO.items())
         gender = random.choice(genWeightedList(GENDER_RATIO))
         
        
@@ -74,7 +73,6 @@ for year in YEARS:
         #religion = "Hindu"
         religion = random.choice(list(RELIGION_RATIO.keys()))
         religion = random.choice(genWeightedList(RELIGION_RATIO))
-        #religion = random.choice(RELIGION_RATIO.keys(), weights = RELIGION_RATIO.items())
         school = random.choice(SCHOOLS)
         name = namegen.generateName(gender, religion)
         roll = 0 #todo
