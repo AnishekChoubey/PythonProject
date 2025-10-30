@@ -6,4 +6,6 @@ data = {
 }
 df = pd.DataFrame(data)
 del df['Age']
+
+
 print(df)
