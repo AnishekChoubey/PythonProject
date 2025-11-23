@@ -20,12 +20,12 @@ YEAR = "ExamYear"
 SCHOOL = "SchoolName"
 
 SUBJECTS = ["Maths","English","SST","Science","Hindi"]
-SCHOOLS = ["Dehli Public",
+SCHOOLS = ["Delhi Public",
            "Angels High",
            "Naman Vidya",
            "Saint Xavier",
            "DAV Public",
-           "Vivekandanda Central"];
+           "Vivekananda Central"];
 YEARS = 2021+np.arange(4)
 averageStudentCountPerYear = 1000
 maxDeltaStudentCount = 100
