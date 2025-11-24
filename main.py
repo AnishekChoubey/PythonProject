@@ -9,6 +9,40 @@ RELIGION = "Religion"
 YEAR = "ExamYear"
 SCHOOL = "SchoolName"
 
+class SelectableData:
+    #todo
+    def __init__(self,mainDf):
+        self.mainDf = mainDf
+        self.applied_filters = {
+            SCHOOL: ["Angels Hingh", "Delhi Public"],
+            YEAR: [2022, 2023],
+            GENDER: ["Male"],
+            RELIGION: ["Hindu"]
+        }
+        self.applied_sorting = NAME
+        self.applied_sorting_ascending = True
+
+    def get_selected_data(self):
+        sdf = self.mainDf
+        print(len(sdf))
+        for key, value in self.applied_filters.items():
+            sdf = pd.concat([sdf[sdf[key] == val] for val in value])
+        return sdf.sort_values(by=self.applied_sorting, ascending=self.applied_sorting_ascending)
+
+    def show_selected_data(self):
+        sdf = self.get_selected_data()
+        printline()
+        print("Showing Selected Data:")
+        print("Total Count:" + str(len(sdf)))
+        print("Applied Filters:", self.applied_filters)
+        print("Applied Sorting:" + self.applied_sorting)
+        print("Sorting Order:" + ("Ascending" if self.applied_sorting_ascending else "Descending"))
+        printline()
+        print(sdf.head(6))  # todo pagination
+        printline()
+        wait4continue()
+        return
+
 
 
 
@@ -37,6 +71,7 @@ if __name__ == "__main__":
 
     df,main_data_path = load_csv(seed=1)
 
+    selectableData = SelectableData(mainDf=df)  # common field for every menu
 
     def home_menu():
         printline()
@@ -51,29 +86,25 @@ if __name__ == "__main__":
             print("5.Exit")
             inp = int(input("Please Choose an option[1-5]:"))
             if inp == 1: view_data_menu()
-            elif inp == 2: return#todo visualize
+            elif inp == 2: visualize_data_menu()#todo visualize
             elif inp == 3: modify_data_menu()
             elif inp == 4: delete_data_menu()
             elif inp == 5: return
 
+    def visualize_data_menu():
+        printline()
+        while True:
+            print("VISUALIZE DATA OPTIONS:")
+            print("1.Show Selected Data")
+            print("2.Apply Filters(By Schools,Year,Gender,Religion)")
+            print("3.Apply Sorting(By Name,Percentage)")
+            print("4.Show Histogram for Selected Data (On Basis of Marks, Students Count etc.)")
+            inp = int(input("Please Choose an option[1-5]:"))
+            if inp == 1:selectableData.show_selected_data()
+            elif inp == 2:return
+
 
     def view_data_menu():
-        applied_filters = {
-            SCHOOL:["Angels Hingh","Delhi Public"],
-            YEAR:[2022,2023],
-            GENDER:["Male"],
-            RELIGION:["Hindu"]
-        }
-        applied_sorting = NAME
-        applied_sorting_ascending = True
-
-
-        def get_selected_data():
-            sdf = df
-            print(len(sdf))
-            for key, value in applied_filters.items():
-                sdf = pd.concat([sdf[sdf[key] == val] for val in value])
-            return sdf.sort_values(by=applied_sorting, ascending=applied_sorting_ascending)
 
 #todo:
         def apply_filters():
@@ -87,31 +118,17 @@ if __name__ == "__main__":
         def apply_sorting():
             return 0
 
-        def show_selected_data():
-            sdf = get_selected_data()
-            while True:
-                printline()
-                print("Showing Selected Data:")
-                print("Total Count:"+str(len(sdf)))
-                print("Applied Filters:",applied_filters)
-                print("Applied Sorting:"+applied_sorting)
-                print("Sorting Order:"+("Ascending" if applied_sorting_ascending else "Descending"))
-                printline()
-                print(sdf.head(6))  # todo pagination
-                printline()
-                wait4continue()
-                return
-            return 0
+
 
         def export_selected_data():
-            sdf = get_selected_data()
+            sdf = selectableData.get_selected_data()
             try:
                 printline()
                 print("Exporting Selected Data:")
                 print("Total Count:" + str(len(sdf)))
-                print("Applied Filters:", applied_filters)
-                print("Applied Sorting:" + applied_sorting)
-                print("Sorting Order:" + ("Ascending" if applied_sorting_ascending else "Descending"))
+                print("Applied Filters:", selectableData.applied_filters)
+                print("Applied Sorting:" + selectableData.applied_sorting)
+                print("Sorting Order:" + ("Ascending" if selectableData.applied_sorting_ascending else "Descending"))
                 printline()
                 path = input("Please Enter the Path:")
                 sdf.to_csv(path, index=False)
@@ -145,7 +162,7 @@ if __name__ == "__main__":
             print("5.Show Data by Roll Number")
             print("6.Go Back")
             inp = int(input("Please Choose an option[1-5]:"))
-            if inp == 1: show_selected_data()
+            if inp == 1: selectableData.show_selected_data()
             elif int(inp) == 2: apply_filters()
             elif int(inp) == 3: apply_sorting()
             elif int(inp) == 4: export_selected_data()
