@@ -109,13 +109,55 @@ if __name__ == "__main__":
 #todo:
         def apply_filters():
             printline()
-            print("Available Filters:"+df.columns)
+            #TODO This doesnt work!! build a new one
+            print("Options while applying filters for each column:")
+            print("#Type Specific FILTER VALUE to apply as filter")
+            print("#Use Comma ',' to separate multiple filter values")
+            print("#Type 'REMOVE' to remove any existing filter")
+            print("#Type 'SKIP' to keep the existing filter")
+            print("Available Columns for Filtering:",df.columns)
             for col in df.columns:
-                print()
+                printline()
+                print("Column Name: ",col)
+
+                print("Currently applied Filters: "+(str(selectableData.applied_filters[col]) if col in selectableData.applied_filters else "None"))
+
+                inp = input("[Values/REMOVE/SKIP]:")
+
+                if inp != "SKIP":
+                    if inp == "REMOVE":
+                        selectableData.applied_filters[col] = None
+
+                    selectableData.applied_filters[col] = inp.split(",")
+
+                wait4continue("Filters applied for "+str(col)+":"+(str(selectableData.applied_filters[col]) if col in selectableData.applied_filters else "None"))
+
 
             return 0
 
         def apply_sorting():
+            print("Columns",df.columns)
+            while True:
+                selectedCol = input("Type Column for Sorting:")
+                if selectedCol not in df.columns:
+                    print("Invalid Column Name")
+                    continue
+                print("Selected Sorting Order For Column:",selectedCol)
+                print("A for Ascending, D for Descending")
+                while True:
+                    order = input("[A/D]:")
+                    if order not in ["A", "D"]:
+                        print("Invalid Order")
+                        continue
+                    selectableData.applied_sorting_ascending = order == "A"
+                    break
+
+                selectableData.applied_sorting = selectedCol
+                wait4continue("Sorting applied!")
+                break
+
+
+
             return 0
 
 
@@ -156,8 +198,8 @@ if __name__ == "__main__":
             printline()
             print("VIEW DATA MENU Options:")
             print("1.Show Selected Data")
-            print("2.Apply Filters(By Schools,Year,Gender,Religion)")
-            print("3.Apply Sorting(By Name,Percentage)")
+            print("2.Apply Filters")
+            print("3.Apply Sorting")
             print("4.Export Selected Data")
             print("5.Show Data by Roll Number")
             print("6.Go Back")
