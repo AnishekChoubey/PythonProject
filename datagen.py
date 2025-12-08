@@ -21,14 +21,12 @@ SCHOOL = "SchoolName"
 
 SUBJECTS = ["Maths","English","SST","Science","Hindi"]
 SCHOOLS = ["Delhi Public",
-           "Angels High",
            "Naman Vidya",
            "Saint Xavier",
-           "DAV Public",
-           "Vivekananda Central"];
-YEARS = 2021+np.arange(4)
-averageStudentCountPerYear = 1000
-maxDeltaStudentCount = 100
+           "DAV Public"];
+YEARS = 2022+np.arange(3)
+averageStudentCountPerYear = 100
+maxDeltaStudentCount = 10
 
 
 
@@ -129,7 +127,13 @@ def findWithName(name):
 
 #generating list with a name of choice
 if __name__ == "__main__":
-    df, seed = findWithName('Anishek Choubey')
+
+    #df, seed = findWithName('Anishek Choubey')
+
+    seed = 4
+    df = generation_function(seed)
+
+
     CSV_PATH = "adata/a_data_" + str(seed) + ".csv"
     df.to_csv(CSV_PATH, index=False)
     print(df)
