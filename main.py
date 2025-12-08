@@ -16,10 +16,7 @@ class SelectableData:
     def __init__(self,mainDf):
         self.mainDf = mainDf
         self.applied_filters = {
-            SCHOOL: ["Angels High", "Delhi Public"],
-            YEAR: [2022, 2023],
-            GENDER: ["Male"],
-            RELIGION: ["Hindu"]
+
         }
         self.applied_sorting = NAME
         self.applied_sorting_ascending = True
