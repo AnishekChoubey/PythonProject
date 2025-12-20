@@ -25,7 +25,8 @@ def printline():
     print('\n\n')
     print("-"*25)
 
-def wait4continue(pre_txt ='', txt ="Press ENTER to continue..."):
+def wait4continue(pre_txt ='',
+                  txt ="Press ENTER to continue..."):
     input(pre_txt + txt)
 
 def saveOrContinue(plt):
@@ -44,7 +45,8 @@ def selectColumn(df, columns_not_allowed = []):
         print((i + 1), ". ", l[i])
     retval = None
     while True:
-        colIndex = int(input("Select [1-" + str(len(l)) + "]:")) - 1
+        colIndex = int(input
+            ("Select [1-" + str(len(l)) + "]:")) - 1
         colLabel = l[colIndex]
         retval = colLabel
         break
@@ -63,7 +65,8 @@ def get_df():
         if value is not None:
             if len(value) > 0:
                 sdf = pd.concat([sdf[sdf[key] == val] for val in value])
-    return sdf.sort_values(by=applied_sorting, ascending=applied_sorting_ascending)
+    return sdf.sort_values(by=applied_sorting,
+                           ascending=applied_sorting_ascending)
 
 
 
@@ -91,8 +94,10 @@ def apply_filters():
         while True:
             printline()
             print("Selected Column:" + selectedColumn)
-            print("Currently applied filters:" + str(str(applied_filters[
-                                                             selectedColumn]) if selectedColumn in applied_filters else 'None'))
+            print("Currently applied filters:" +
+                  str(str(applied_filters[selectedColumn])
+                      if selectedColumn in applied_filters
+                      else 'None'))
             print("1.Add filter")
             print("2.Clear all filters")
             print("Leave blank to Go Back")
@@ -105,8 +110,10 @@ def apply_filters():
 
             if inp == 1:
                 print("Add filter")
-                print("#Repeatedly Type FilterValue and press Enter for the next value")
-                print("#To apply the filter and go back - Leave Blank and press Enter when finished")
+                print("#Repeatedly Type FilterValue "
+                      "and press Enter for the next value")
+                print("#To apply the filter and go back "
+                      "- Leave Blank and press Enter when finished")
                 i = 0
                 while True:
                     i += 1
@@ -118,7 +125,8 @@ def apply_filters():
                         applied_filters[selectedColumn] = []
 
                     applied_filters[selectedColumn].append(filValue)
-                print("Filters Applied: ", applied_filters[selectedColumn])
+                print("Filters Applied: ",
+                      applied_filters[selectedColumn])
                 wait4continue()
             elif inp == 2:
                 applied_filters.pop(selectedColumn)
@@ -163,7 +171,10 @@ def export_selected_data():
         print("Total Count:" + str(len(sdf)))
         print("Applied Filters:", applied_filters)
         print("Applied Sorting:" + applied_sorting)
-        print("Sorting Order:" + ("Ascending" if applied_sorting_ascending else "Descending"))
+        print("Sorting Order:" +
+              ("Ascending"
+               if applied_sorting_ascending else
+               "Descending"))
         printline()
         path = input("Please Enter the Path:")
         sdf.to_csv(path, index=False)
@@ -191,9 +202,12 @@ def show_selected_data():
     print("Total Count:" + str(len(sdf)))
     print("Applied Filters:", applied_filters)
     print("Applied Sorting:" + applied_sorting)
-    print("Sorting Order:" + ("Ascending" if applied_sorting_ascending else "Descending"))
+    print("Sorting Order:" +
+          ("Ascending"
+           if applied_sorting_ascending else
+           "Descending"))
     printline()
-    print(sdf.head(6))  # todo pagination
+    print(sdf.head(6))
     printline()
     wait4continue()
     return
@@ -292,7 +306,8 @@ def visualize_data_menu():
 
 
             avg_per_subject = sdf[SUBJECTS].mean()
-            plt.plot(avg_per_subject.index, avg_per_subject.values, marker="o")
+            plt.plot(avg_per_subject.index,
+                     avg_per_subject.values, marker="o")
             plt.title("Average Marks per Subject")
             plt.ylabel("Average Marks")
             plt.grid(True)
@@ -347,7 +362,8 @@ def visualize_data_menu():
 
             top10 = student_avg[:10]
 
-            names = [ str(each[0]).replace(" ", "\n")+'\n'+str(each[2])+''  for each in top10]
+            names = [ str(each[0]).replace(" ", "\n")
+                      +'\n'+str(each[2])+''  for each in top10]
             averages = [each[1] for each in top10]
 
 
@@ -366,7 +382,8 @@ def modify_data_menu():#Requires saving data
         for col in sdf.columns:
             if col == ROLL:
                 continue
-            print("Please type new "+col+" and press ENTER, Or leave it blank to skip")
+            print("Please type new "+col
+                  +" and press ENTER, Or leave it blank to skip")
             inp = input("New "+col+":")
             if inp.strip():
 
